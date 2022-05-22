@@ -14,5 +14,6 @@ private String userName;
 private String tag;
 private String content;
 private UploadFile attachFile;
+private boolean HotDeal;
 private List<UploadFile> imageFiles;
 }

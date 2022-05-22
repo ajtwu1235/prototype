@@ -61,14 +61,14 @@ public class ItemController {
         return  "item-view";
     }
 
-    //파일 보이기
+    //여러 이미지 파일 보이는 요청
     @ResponseBody
     @GetMapping("/images/{filename}")
     public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
-       return new UrlResource("file:" +fileStore.getFullPath(filename));
+       return new UrlResource("file:"+fileStore.getFullPath(filename));
     }
 
-    //파일 다운로드
+    //파일 1개 다운로드
     @GetMapping("/attach/{itemId}")
     public ResponseEntity<Resource> downloadAttach(@PathVariable Long itemId) throws MalformedURLException {
         Item item = itemRepository.findById(itemId);

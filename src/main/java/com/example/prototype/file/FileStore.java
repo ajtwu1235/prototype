@@ -1,5 +1,6 @@
 package com.example.prototype.file;
 
+import com.example.prototype.item.Item;
 import com.example.prototype.item.UploadFile;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ public class FileStore {
     @Value("${file.dir}")
     private String fileDir;
 
+
     //파일명의 위치
     public String getFullPath(String filename){
         return fileDir + filename;
@@ -31,6 +33,11 @@ public class FileStore {
                 storeFileResult.add(uploadFile);
             }
         }
+
+        Item item = new Item();
+        item.toString();
+
+
         return storeFileResult;
     }
 
@@ -51,7 +58,7 @@ public class FileStore {
 
     //저장할 파일이름 잡아주기 ->getFullPath 만들기위함
     private String createStoreFileName(String originalFilename) {
-        //대충 랜덤으로 만들어줌
+        // 랜덤으로 만들어줌
         String uuid = UUID.randomUUID().toString();
         String ext = extracted(originalFilename);
         return uuid+"."+ext;
