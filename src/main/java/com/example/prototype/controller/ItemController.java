@@ -63,8 +63,9 @@ public class ItemController {
 
     //여러 이미지 파일 보이는 요청
     @ResponseBody
-    @GetMapping("/images/{filename}")
+    @GetMapping(value = "/images/{filename}",produces ="image/png")
     public Resource downloadImage(@PathVariable String filename) throws MalformedURLException {
+
        return new UrlResource("file:"+fileStore.getFullPath(filename));
     }
 

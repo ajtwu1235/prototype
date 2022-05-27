@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 public class Member {
 
     private Long id;
-
     @NotEmpty
     private String loginId;
     @NotEmpty

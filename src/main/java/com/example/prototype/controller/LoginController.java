@@ -2,6 +2,7 @@ package com.example.prototype.controller;
 
 
 import com.example.prototype.Login.LoginService;
+import com.example.prototype.SessionConst;
 import com.example.prototype.member.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +11,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Slf4j
@@ -25,7 +29,9 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult){
+    public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult,
+                        @RequestParam(defaultValue = "/") String redirectURL,
+                        HttpServletRequest request){
         if(bindingResult.hasErrors()){
             return "login/loginForm";
         }
@@ -36,7 +42,19 @@ public class LoginController {
             return "login/loginForm";
         }
         //로그인 성공
+        //세션 등록
+        HttpSession session = request.getSession();
+        session.setAttribute(SessionConst.LOGIN_MEMBER,loginMember);
 
+        return "redirect:" +redirectURL;
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if(session!=null){
+            session.invalidate();
+        }
         return "redirect:/";
     }
 }
